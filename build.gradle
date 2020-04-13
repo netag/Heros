@@ -37,11 +37,14 @@ dependencies {
     implementation "io.ktor:ktor-server-netty:$ktor_version"
     implementation "ch.qos.logback:logback-classic:$logback_version"
     implementation "io.ktor:ktor-server-core:$ktor_version"
-    implementation "io.ktor:ktor-auth:$ktor_version"
     implementation "io.ktor:ktor-serialization:$ktor_version"
     testImplementation "io.ktor:ktor-server-tests:$ktor_version"
 
     // serialization
     compile "org.jetbrains.kotlinx:kotlinx-serialization-runtime:$serialization_version"
     compile "org.jetbrains.kotlinx:kotlinx-serialization-runtime-common:$serialization_version"
+
+    // graphql
+    compile "com.apurebase:kgraphql:$kgraphql_version"
+    compile "com.apurebase:kgraphql-ktor:$kgraphql_version"
 }
