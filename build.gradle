@@ -1,15 +1,19 @@
 buildscript {
     repositories {
         jcenter()
+        mavenCentral()
     }
     
     dependencies {
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+        classpath "org.jetbrains.kotlin:kotlin-serialization:$kotlin_version"
     }
 }
 
+apply plugin: 'java'
 apply plugin: 'kotlin'
 apply plugin: 'application'
+apply plugin: 'kotlinx-serialization'
 
 group 'com.netag'
 version '0.0.1'
@@ -35,4 +39,8 @@ dependencies {
     implementation "io.ktor:ktor-server-core:$ktor_version"
     implementation "io.ktor:ktor-auth:$ktor_version"
     testImplementation "io.ktor:ktor-server-tests:$ktor_version"
+
+    // serialization
+    compile "org.jetbrains.kotlinx:kotlinx-serialization-runtime:$serialization_version"
+    compile "org.jetbrains.kotlinx:kotlinx-serialization-runtime-common:$serialization_version"
 }
