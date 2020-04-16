@@ -2,8 +2,9 @@ buildscript {
     repositories {
         jcenter()
         mavenCentral()
+        maven { url "https://dl.bintray.com/arrow-kt/arrow-kt/" }
     }
-    
+
     dependencies {
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
         classpath "org.jetbrains.kotlin:kotlin-serialization:$kotlin_version"
@@ -14,6 +15,7 @@ apply plugin: 'java'
 apply plugin: 'kotlin'
 apply plugin: 'application'
 apply plugin: 'kotlinx-serialization'
+apply plugin: 'kotlin-kapt'
 
 group 'com.netag'
 version '0.0.1'
@@ -32,13 +34,39 @@ repositories {
     maven { url 'https://kotlin.bintray.com/ktor' }
 }
 
+sourceCompatibility = 1.8
+compileKotlin {
+    kotlinOptions.jvmTarget = "1.8"
+}
+compileTestKotlin {
+    kotlinOptions.jvmTarget = "1.8"
+}
+
+test {
+    useJUnitPlatform()
+}
+
 dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
-    implementation "io.ktor:ktor-server-netty:$ktor_version"
     implementation "ch.qos.logback:logback-classic:$logback_version"
-    implementation "io.ktor:ktor-server-core:$ktor_version"
-    implementation "io.ktor:ktor-serialization:$ktor_version"
+
+    // arrow
+    compile "io.arrow-kt:arrow-core:$arrow_version"
+    compile "io.arrow-kt:arrow-syntax:$arrow_version"
+    kapt    "io.arrow-kt:arrow-meta:$arrow_version"
+
+    // ktor server
+    compile "io.ktor:ktor-server-netty:$ktor_version"
+    compile "io.ktor:ktor-server-core:$ktor_version"
+    compile "io.ktor:ktor-serialization:$ktor_version"
     testImplementation "io.ktor:ktor-server-tests:$ktor_version"
+
+    // ktor client
+    implementation "io.ktor:ktor-client-core:$ktor_version"
+    implementation "io.ktor:ktor-client-cio:$ktor_version"
+    implementation "io.ktor:ktor-client-serialization:$ktor_version"
+    implementation "io.ktor:ktor-client-serialization-jvm:$ktor_version"
+    testImplementation "io.ktor:ktor-client-mock:$ktor_version"
 
     // serialization
     compile "org.jetbrains.kotlinx:kotlinx-serialization-runtime:$serialization_version"
@@ -47,4 +75,14 @@ dependencies {
     // graphql
     compile "com.apurebase:kgraphql:$kgraphql_version"
     compile "com.apurebase:kgraphql-ktor:$kgraphql_version"
+
+    // kotest
+    testImplementation "io.kotest:kotest-runner-junit5-jvm:$kotest_version"
+    testImplementation "io.kotest:kotest-extensions-koin-jvm:$kotest_version"
+    testImplementation "io.kotest:kotest-assertions-core-jvm:$kotest_version"
+    testImplementation "io.kotest:kotest-assertions-arrow-jvm:$kotest_version"
+    testImplementation "io.kotest:kotest-property-jvm:$kotest_version"
+
+    // kmock
+    testImplementation "io.mockk:mockk:$kmock_version"
 }
