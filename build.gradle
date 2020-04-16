@@ -76,6 +76,11 @@ dependencies {
     compile "com.apurebase:kgraphql:$kgraphql_version"
     compile "com.apurebase:kgraphql-ktor:$kgraphql_version"
 
+    // koin
+    compile "org.koin:koin-core:$koin_version"
+    compile "org.koin:koin-ktor:$koin_version"
+    testCompile "org.koin:koin-test:$koin_version"
+
     // mongo
     compile "org.litote.kmongo:kmongo-coroutine-serialization:$kmongo_version"
 
